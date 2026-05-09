@@ -366,7 +366,6 @@ let copyNumbers = [...numbers];
 
 Destructuring হলো এমন একটি syntax যেটা ব্যবহার করে আমরা **array বা object থেকে value আলাদা করে variable-এ assign করতে পারি**।
 
-👉 এতে code ছোট, clean এবং readable হয়।
 
 ---
 
@@ -394,29 +393,7 @@ let [first, , third] = [10, 20, 30];
 👉 Explanation:
 `first = 10`, `third = 30` (মাঝের value skip করা হয়েছে)
 
----
 
-## 🔸 Default Value
-
-```ts id="q8k1z5"
-let [x = 5, y = 10] = [1];
-```
-
-👉 Explanation:
-`x = 1`, `y = 10` (কারণ y এর value দেওয়া হয়নি)
-
----
-
-## 🔸 Rest with Array
-
-```ts id="d2f7h9"
-let [first, ...rest] = [1, 2, 3, 4];
-```
-
-👉 Explanation:
-`first = 1`, `rest = [2, 3, 4]`
-
----
 
 # 🔹 Object Destructuring
 
@@ -434,18 +411,6 @@ let { name, age } = user;
 👉 Explanation:
 `name = "Rahim"`, `age = 25`
 
----
-
-## 🔸 Rename Variable
-
-```ts id="u4x8c2"
-let { name: userName } = user;
-```
-
-👉 Explanation:
-`name` property কে `userName` নামে ব্যবহার করা হয়েছে
-
----
 
 ## 🔸 Default Value
 
@@ -456,36 +421,6 @@ let { city = "Dhaka" } = user;
 👉 Explanation:
 `city` না থাকলে default `"Dhaka"` হবে
 
----
-
-## 🔸 Rest with Object
-
-```ts id="k1m9z7"
-let { name, ...others } = {
-  name: "Rahim",
-  age: 25,
-  city: "Dhaka",
-};
-```
-
-👉 Explanation:
-`name = "Rahim"`
-`others = { age: 25, city: "Dhaka" }`
-
----
-
-# 🔹 Destructuring in Function Parameter
-
-```ts id="n8q2v4"
-function printUser({ name, age }: { name: string; age: number }) {
-  console.log(name, age);
-}
-```
-
-👉 Explanation:
-Function parameter-এর মধ্যে destructuring করা হয়েছে এবং type define করা হয়েছে।
-
----
 
 # 🔹 Nested Destructuring
 
@@ -508,26 +443,6 @@ Nested object থেকে সরাসরি `city` বের করা হয়�
 
 ---
 
-# ⚠️ Important Notes
-
-* Array destructuring → order গুরুত্বপূর্ণ
-* Object destructuring → key নাম গুরুত্বপূর্ণ
-* Default value ব্যবহার করা যায়
-* Rest operator (`...`) ব্যবহার করা যায়
-
----
-
-## 📊 Summary Table
-
-| Feature              | Description                    |
-| -------------------- | ------------------------------ |
-| Array Destructuring  | index অনুযায়ী value বের করা    |
-| Object Destructuring | key অনুযায়ী value বের করা      |
-| Default Value        | fallback value দেওয়া যায়       |
-| Rename               | variable নাম পরিবর্তন করা যায়  |
-| Rest                 | remaining data collect করা যায় |
-
----
 
 ## 📦 What Is Type Alias?
 
@@ -605,21 +520,6 @@ let acc: Account = {
 👉 Explanation:
 `readonly` দিলে ওই property change করা যাবে না।
 
----
-
-
-## 🔹 Function Type Alias
-
-```ts id="f7g8h9"
-type Add = (a: number, b: number) => number;
-
-const addNumbers: Add = (a, b) => a + b;
-```
-
-👉 Explanation:
-Function-এর type একবার define করে reuse করা যায়।
-
----
 
 ## 🔹 Array Type Alias
 
@@ -660,31 +560,6 @@ id = true;     // ❌ Error
 👉 Explanation:
 `id` number অথবা string হতে পারবে, অন্য type হলে error দিবে।
 
----
-
-## 🔸 Union with Function
-
-```ts id="u4n5i6"
-function printId(id: number | string) {
-  console.log(id);
-}
-```
-
-👉 Explanation:
-Function parameter-এ একাধিক type allow করা হয়েছে।
-
----
-
-## 🔸 Union with Array
-
-```ts id="u7n8i9"
-let mixed: (number | string)[] = [1, "Rahim", 2, "Karim"];
-```
-
-👉 Explanation:
-Array-এ multiple type allow করা হয়েছে।
-
----
 
 ## 🔸 Literal Union
 
@@ -697,24 +572,6 @@ let currentStatus: Status = "success";
 👉 Explanation:
 নির্দিষ্ট কিছু value limit করা হয়েছে।
 
----
-
-## ⚠️ Narrowing (Important)
-
-```ts id="u3n4a5"
-function process(value: number | string) {
-  if (typeof value === "string") {
-    console.log(value.toUpperCase());
-  } else {
-    console.log(value.toFixed(2));
-  }
-}
-```
-
-👉 Explanation:
-Type check করে specific type অনুযায়ী কাজ করা হয় — এটাকে narrowing বলে।
-
----
 
 # 🔹 Intersection Type (`&`)
 
@@ -759,31 +616,7 @@ type Combined = A & B & C;
 👉 Explanation:
 একাধিক type combine করা যায়।
 
----
 
-## 🔸 Conflict Example
-
-```ts id="i7n8t9"
-type A = { id: number };
-type B = { id: string };
-
-type C = A & B; // ❌ Problem
-```
-
-👉 Explanation:
-একই property different type হলে conflict হয়।
-
----
-
-# 🔍 Union vs Intersection
-
-| Feature        | Union (`|`)                      | Intersection (`&`)              |
-|----------------|----------------------------------|--------------------------------|
-| কাজ            | একটার মধ্যে যেকোনো একটা          | সবগুলো একসাথে                  |
-| Example        | string | number                 | A & B                          |
-| Use Case       | flexible input                  | combine structure              |
-
----
 
 # 📘 Ternary, Nullish Coalescing & Optional Chaining in TypeScript
 
@@ -911,56 +744,6 @@ let city = user.address.city; // ❌ error if address undefined
 👉 Explanation:
 এখানে error হতে পারে যদি address না থাকে।
 
----
-
-## 📦 Optional Chaining with Function
-
-```ts id="o7p8t9"
-let user = {
-  greet: () => "Hello",
-};
-
-let msg = user.greet?.();
-```
-
-👉 Explanation:
-Function থাকলে call হবে, না থাকলে error হবে না।
-
----
-
-# 🔍 Combined Example
-
-```ts id="c1o2m3"
-let user = {
-  name: "Rahim",
-};
-
-let city = user.address?.city ?? "Unknown";
-```
-
-👉 Explanation:
-`address` না থাকলে `city` undefined → তারপর `"Unknown"` use হবে।
-
----
-
-# ⚠️ Important Notes
-
-* Ternary → short condition
-* `??` → null/undefined check করে
-* `?.` → safe access দেয়
-* `||` আর `??` এক না
-
----
-
-## 📊 Summary Table
-
-| Feature            | Operator | কাজ                   |
-| ------------------ | -------- | --------------------- |
-| Ternary            | ? :      | condition short করা   |
-| Nullish Coalescing | ??       | default value set করা |
-| Optional Chaining  | ?.       | safe property access  |
-
----
 
 # 📘 Nullable, Unknown & Never Types in TypeScript
 
@@ -1003,31 +786,6 @@ age = undefined; // ✅
 👉 Explanation:
 value assign না করলে undefined হতে পারে।
 
----
-
-## 📦 Combined Nullable
-
-```ts id="n7u8l9"
-let user: string | null | undefined;
-```
-
-👉 Explanation:
-এখানে তিনটা possible value আছে।
-
----
-
-## ⚠️ Important
-
-```ts id="n0u1l2"
-let name: string | null = null;
-
-console.log(name.length); // ❌ Error
-```
-
-👉 Explanation:
-null হলে property access করা যাবে না — আগে check করতে হবে।
-
----
 
 # 🔹 Unknown Type
 
@@ -1063,31 +821,6 @@ value.toUpperCase(); // ❌ Error
 👉 Explanation:
 unknown type directly use করা যায় না।
 
----
-
-## ✅ With Type Checking
-
-```ts id="u7n8k9"
-let value: unknown = "Hello";
-
-if (typeof value === "string") {
-  console.log(value.toUpperCase());
-}
-```
-
-👉 Explanation:
-type check করার পরে safely ব্যবহার করা যায়।
-
----
-
-## 🔍 unknown vs any
-
-| Feature | any       | unknown   |
-| ------- | --------- | --------- |
-| Safety  | ❌ unsafe  | ✅ safe    |
-| Check   | দরকার নাই | দরকার আছে |
-
----
 
 # 🔹 Never Type
 
@@ -1118,44 +851,6 @@ function infiniteLoop(): never {
 
 👉 Explanation:
 function কখনো শেষ হয় না।
-
----
-
-## 📦 Exhaustive Check
-
-```ts id="n9e0v1"
-type Shape = "circle" | "square";
-
-function getShape(shape: Shape) {
-  if (shape === "circle") return "Circle";
-  if (shape === "square") return "Square";
-
-  let check: never = shape; // ensure সব case cover হয়েছে
-}
-```
-
-👉 Explanation:
-সব condition handle করা হয়েছে কিনা check করার জন্য `never` ব্যবহার হয়।
-
----
-
-# ⚠️ Important Notes
-
-* Nullable → null/undefined allow করে
-* unknown → safe any
-* never → never return / unreachable code
-
----
-
-## 📊 Summary Table
-
-| Type     | Description                      |
-| -------- | -------------------------------- |
-| Nullable | null / undefined allow           |
-| unknown  | safe any (type check required)   |
-| never    | never returns / impossible state |
-
----
 
 
 
