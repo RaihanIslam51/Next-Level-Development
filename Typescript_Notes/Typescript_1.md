@@ -160,6 +160,7 @@ Object ব্যবহার করা হয় structured data store করার
 ```ts id="9fz0k9"
 let user: {
   name: string;
+  orge: "programming Hero"; //fix type  value jake literal bole
   age: number;
   isAdmin: boolean;
 } = {
