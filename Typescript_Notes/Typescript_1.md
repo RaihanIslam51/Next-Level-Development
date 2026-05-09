@@ -376,47 +376,7 @@ Array parameter হিসেবে নিয়ে calculation করা হয়ে�
 
 ---
 
-## 🔹 Rest Parameters
 
-```ts id="l9f2g6"
-function sum(...numbers: number[]): number {
-  return numbers.reduce((total, n) => total + n, 0);
-}
-```
-
-👉 Explanation:
-একাধিক argument নিতে rest parameter ব্যবহার করা হয়।
-
----
-
-## 🔹 Function Overloading
-
-```ts id="b8h1s3"
-function combine(a: number, b: number): number;
-function combine(a: string, b: string): string;
-
-function combine(a: any, b: any) {
-  return a + b;
-}
-```
-
-👉 Explanation:
-একই function different type handle করতে পারে।
-
----
-
-## 🔹 Async Function
-
-```ts id="r6t4y2"
-async function fetchData(): Promise<string> {
-  return "Data loaded";
-}
-```
-
-👉 Explanation:
-Async function সবসময় Promise return করে।
-
----
 
 ## 🔹 Callback Function
 
@@ -431,30 +391,6 @@ Function-এর ভিতরে আরেকটা function pass করা য�
 
 ---
 
-## ⚠️ Important Notes
-
-* সবসময় parameter type define করো
-* return type define করলে code safe হয়
-* optional parameter শেষে দিতে হয়
-* type mismatch হলে error দিবে
-
----
-
-## 📊 Summary Table
-
-| Feature        | Description           |
-| -------------- | --------------------- |
-| Basic Function | normal function       |
-| void           | no return             |
-| Optional Param | parameter optional    |
-| Default Param  | default value         |
-| Arrow Function | modern syntax         |
-| Union Type     | multiple type support |
-| Literal Type   | fixed value support   |
-| Rest Param     | multiple arguments    |
-| Async Function | Promise return        |
-
----
 
 ## 🔍 Difference Between Rest & Spread
 
