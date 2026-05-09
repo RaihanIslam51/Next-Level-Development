@@ -56,64 +56,6 @@ Represents an intentional absence of value
 let emptyValue: null = null;
 ```
 
----
-
-## ⚫ 5. undefined
-
-Represents a variable that has been declared but not assigned
-
-```ts
-let data: undefined = undefined;
-```
-
----
-
-## 🔢 6. bigint
-
-Used for very large integers beyond the safe limit of number
-
-```ts
-let bigNumber: bigint = 123456789012345678901234567890n;
-```
-
----
-
-## 🔷 7. symbol
-
-Used to create unique identifiers
-
-```ts
-let id: symbol = Symbol("id");
-let anotherId: symbol = Symbol("id");
-
-console.log(id === anotherId); // false
-```
-
----
-
-## ⚠️ Type Safety Example
-
-TypeScript prevents incorrect assignments:
-
-```ts
-let num: number = "hello"; // ❌ Error
-```
-
----
-
-## 📊 Summary Table
-
-| Type      | Example      | Description        |
-| --------- | ------------ | ------------------ |
-| number    | 10, 3.14     | Numeric values     |
-| string    | "Hello"      | Text data          |
-| boolean   | true / false | Logical values     |
-| null      | null         | Empty value        |
-| undefined | undefined    | Not assigned       |
-| bigint    | 123n         | Large integers     |
-| symbol    | Symbol()     | Unique identifiers |
-
----
 
 ## 📦 What Are Non-Primitive Types?
 
@@ -203,40 +145,6 @@ let userInfo: [string, number] = ["Rahim", 25];
 👉 Explanation:
 এখানে প্রথম value অবশ্যই string এবং দ্বিতীয় value number হতে হবে।
 
-👉 Example with multiple types:
-
-```ts id="j8p1c2"
-let employee: [number, string, boolean] = [101, "Karim", true];
-```
-
-👉 Wrong example:
-
-```ts id="9c2k1l"
-let wrong: [string, number] = [25, "Rahim"]; // ❌ Error
-```
-
-👉 Explanation:
-Tuple-এ order খুব গুরুত্বপূর্ণ — type mismatch হলে error দিবে।
-
----
-
-## ⚠️ Important Notes
-
-* Array → same type multiple value
-* Object → structured data (key-value)
-* Tuple → fixed structure + fixed order
-
----
-
-## 📊 Summary Table
-
-| Type   | Example                  | Description                |
-| ------ | ------------------------ | -------------------------- |
-| Array  | [1, 2, 3]                | একই type এর multiple value |
-| Object | {name: "Rahim", age: 25} | structured data            |
-| Tuple  | ["Rahim", 25]            | fixed order + fixed type   |
-
----
 
 ## 📦 What Is a Function?
 
@@ -257,20 +165,6 @@ function add(a: number, b: number): number {
 👉 Explanation:
 এখানে `a` এবং `b` number type এবং function number return করবে।
 
----
-
-## 🔹 Function Without Return (void)
-
-```ts id="a8c3k9"
-function greet(name: string): void {
-  console.log("Hello " + name);
-}
-```
-
-👉 Explanation:
-`void` মানে function কোনো value return করবে না।
-
----
 
 ## 🔹 Optional Parameters
 
@@ -309,33 +203,6 @@ const multiply = (a: number, b: number): number => {
 👉 Explanation:
 এটা modern JavaScript/TypeScript function লেখার style।
 
----
-
-## 🔹 Function Type
-
-```ts id="t8v3n1"
-let addNumbers: (x: number, y: number) => number;
-
-addNumbers = (x, y) => x + y;
-```
-
-👉 Explanation:
-এখানে variable-এ function type define করা হয়েছে।
-
----
-
-## 🔹 Union Type in Function
-
-```ts id="z1k9d2"
-function printId(id: number | string) {
-  console.log(id);
-}
-```
-
-👉 Explanation:
-এখানে `id` number অথবা string দুইটাই হতে পারে।
-
----
 
 ## 🔹 Literal Type in Function
 
@@ -438,20 +305,6 @@ let [first, second, ...rest] = [10, 20, 30, 40];
 
 ---
 
-## 📦 Rest in Object Destructuring
-
-```ts id="c3k9d2"
-let user = { name: "Rahim", age: 25, city: "Dhaka" };
-
-let { name, ...others } = user;
-```
-
-👉 Explanation:
-`name = "Rahim"`
-`others = { age: 25, city: "Dhaka" }`
-
----
-
 # 🔹 Spread Operator (`...`)
 
 Spread operator ব্যবহার করা হয় **existing data কে expand করার জন্য**।
@@ -495,20 +348,6 @@ let updatedUser = { ...user, city: "Dhaka" };
 👉 Explanation:
 পুরানো object copy করে নতুন property add করা হয়েছে।
 
----
-
-## 📦 Override Value
-
-```ts id="z5p1t6"
-let user = { name: "Rahim", age: 25 };
-
-let newUser = { ...user, age: 30 };
-```
-
-👉 Explanation:
-শেষের value (`age: 30`) পুরানোটাকে override করবে।
-
----
 
 ## 📦 Copy Array / Object
 
@@ -522,23 +361,6 @@ let copyNumbers = [...numbers];
 
 ---
 
-# ⚠️ Important Notes
-
-* Rest → সবসময় **শেষ parameter** হতে হবে
-* Spread → copy/merge/expand করার জন্য
-* Spread shallow copy করে (deep copy না)
-
----
-
-## 📊 Summary Table
-
-| Feature | Rest               | Spread                  |
-| ------- | ------------------ | ----------------------- |
-| কাজ     | collect            | expand                  |
-| ব্যবহার | function parameter | array/object copy/merge |
-| result  | array              | individual values       |
-
----
 
 ## 📦 What Is Destructuring?
 
