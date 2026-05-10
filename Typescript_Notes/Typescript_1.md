@@ -852,11 +852,1590 @@ function infiniteLoop(): never {
 👉 Explanation:
 function কখনো শেষ হয় না।
 
+# TypeScript Type Assertion
+
+## What is Type Assertion?
+
+Type Assertion হলো TypeScript-এর একটি feature যেটা ব্যবহার করে আমরা TypeScript-কে manually বলে দেই কোনো value-এর type কী।
+
+সহজ ভাষায়:
+
+> “এই value-এর type আমি জানি।”
+
+এটি শুধু TypeScript-এর জন্য কাজ করে।  
+Runtime-এ actual value change হয় না।
+
+---
+
+# Syntax
+
+Type Assertion করার সবচেয়ে popular syntax হলো `as`
+
+```ts
+value as Type
+```
+
+---
+
+# Basic Example
+
+```ts
+let data: any = "Hello TypeScript";
+
+let length = (data as string).length;
+
+console.log(length);
+```
+
+---
+
+## Explanation
+
+এখানে:
+
+- `data` এর type হলো `any`
+- TypeScript জানে না এটি string
+- তাই `as string` ব্যবহার করে manually string বলা হয়েছে
+
+---
+
+# Why We Use Type Assertion
+
+Type Assertion ব্যবহার করা হয় যখন TypeScript exact type বুঝতে পারে না।
+
+বিশেষ করে:
+
+- DOM Elements
+- API Response
+- `unknown` type
+- Dynamic Data
+
+---
+
+# Type Assertion with `unknown`
+
+```ts
+let value: unknown = "TypeScript";
+
+console.log((value as string).toUpperCase());
+```
+
+---
+
+## Explanation
+
+`unknown` type directly ব্যবহার করা যায় না।
+
+তাই আগে type assert করতে হয়।
+
+---
+
+# Important Thing
+
+Type Assertion runtime value change করে না।
+
+```ts
+let value: any = 100;
+
+let text = value as string;
+
+console.log(typeof text);
+```
+
+---
+
+## Output
+
+```ts
+number
+```
+
+কারণ actual value এখনো number।
+
+---
+
+# TypeScript Interface
+
+Interface হলো TypeScript-এর একটি feature যেটা object-এর structure define করতে ব্যবহার করা হয়।
+
+সহজ ভাষায়:
+
+> Interface বলে দেয় একটি object-এর মধ্যে কোন কোন property থাকবে এবং তাদের type কী হবে।
+
+---
+
+# Basic Syntax
+
+```ts
+interface User {
+  name: string;
+  age: number;
+}
+```
+
+---
+
+# Example
+
+```ts
+interface User {
+  name: string;
+  age: number;
+}
+
+const user: User = {
+  name: "Raihan",
+  age: 22,
+};
+
+console.log(user);
+```
+
+---
+
+## Explanation
+
+এখানে:
+
+- `User` নামে একটি interface তৈরি করা হয়েছে
+- এতে `name` string হবে
+- `age` number হবে
+- object অবশ্যই এই structure follow করবে
+
+---
+
+# Why We Use Interface
+
+
+- Object structure define করতে
+- Code reusable করতে
+- Type safety বাড়াতে
+- Large project manage করতে
+
+---
+
+# Optional Property
+
+সব property required না করলেও হয়।
+
+`?` ব্যবহার করে optional করা যায়।
+
+---
+
+# Example
+
+```ts
+interface User {
+  name: string;
+  age?: number;
+}
+
+const user: User = {
+  name: "Raihan",
+};
+```
+
+---
+
+## Explanation
+
+এখানে `age` optional।
+
+তাই না দিলেও error হবে না।
+
+---
+
+# Interface with Function
+
+Function-এর structure-ও define করা যায়।
+
+---
+
+# Example
+
+```ts
+interface Add {
+  (a: number, b: number): number;
+}
+
+const sum: Add = (a, b) => {
+  return a + b;
+};
+
+console.log(sum(5, 5));
+```
+
+---
+
+## Explanation
+
+এখানে function কী parameter নেবে এবং কী return করবে তা define করা হয়েছে।
+
+---
+
+# Interface with Array
+
+```ts
+interface StringArray {
+  [index: number]: string;
+}
+
+const names: StringArray = [
+  "Raihan",
+  "Hasan",
+];
+```
+
+---
+
+# Interface Extending
+
+একটি interface আরেকটি interface inherit করতে পারে।
+
+---
+
+# Example
+
+```ts
+interface Person {
+  name: string;
+}
+
+interface Student extends Person {
+  roll: number;
+}
+
+const student: Student = {
+  name: "Raihan",
+  roll: 101,
+};
+```
+
+---
+
+## Explanation
+
+`Student` interface এখন `Person` এর property-ও পাবে।
+
+---
+
+# Interface vs Type
+
+অনেক সময় Interface এবং Type একইরকম মনে হয়।
+
+কিন্তু কিছু পার্থক্য আছে।
+
+---
+
+# Interface
+
+```ts
+interface User {
+  name: string;
+}
+```
+
+---
+
+# Type
+
+```ts
+type User = {
+  name: string;
+};
+```
+
+---
+
+## Main Difference
+
+| Interface | Type |
+|---|---|
+| Object-এর জন্য বেশি ব্যবহার হয় | সব ধরনের type define করা যায় |
+| Extend করা সহজ | Union type support করে |
+| Large project-এ বেশি popular | Flexible |
+
+---
+
+# TypeScript Generics
+
+Generics হলো TypeScript-এর একটি powerful feature যেটা reusable এবং flexible code লিখতে সাহায্য করে।
+
+সহজ ভাষায়:
+
+> Generics ব্যবহার করে আমরা এমন function, interface বা class তৈরি করতে পারি যেটা different type-এর data নিয়ে কাজ করতে পারে type safety বজায় রেখে।
+
+---
+
+# Why We Use Generics
+
+- Reusable code লেখার জন্য
+- Type safety বজায় রাখার জন্য
+- Duplicate code কমানোর জন্য
+- Flexible function তৈরি করার জন্য
+
+---
+
+# Problem Without Generics
+
+ধরি আমরা string return করার function লিখলাম।
+
+```ts
+function getData(data: string): string {
+  return data;
+}
+```
+
+এখন number পাঠালে error হবে।
+
+```ts
+getData(10);
+```
+
+তাই different type support করার জন্য Generics ব্যবহার করা হয়।
+
+---
+
+# Basic Generic Syntax
+
+```ts
+function functionName<T>(value: T): T {
+  return value;
+}
+```
+
+---
+
+## Explanation
+
+এখানে:
+
+- `T` হলো generic type
+- এটি যেকোনো type represent করতে পারে
+- Call করার সময় TypeScript automatically type detect করে
+
+---
+
+# Basic Example
+
+```ts
+function getData<T>(data: T): T {
+  return data;
+}
+
+console.log(getData<string>("Hello"));
+console.log(getData<number>(100));
+```
+
+---
+
+## Explanation
+
+এখানে একই function:
+
+- string handle করছে
+- number handle করছে
+
+কোনো extra function ছাড়াই।
+
+---
 
 
 
 
+---
 
+## Explanation
+
+এখানে generic array ব্যবহার করা হয়েছে।
+
+---
+
+# Generics with Interface
+
+```ts
+interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+}
+```
+
+---
+
+# Example
+
+```ts
+interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+}
+
+const response: ApiResponse<string> = {
+  success: true,
+  data: "Data Loaded",
+};
+```
+
+---
+
+## Explanation
+
+এখানে `data` different type হতে পারবে।
+
+---
+
+# Generics with Multiple Types
+
+একাধিক generic type ব্যবহার করা যায়।
+
+---
+
+# Example
+
+```ts
+function getInfo<T, U>(
+  name: T,
+  age: U
+): void {
+  console.log(name, age);
+}
+
+getInfo<string, number>("Raihan", 22);
+```
+
+---
+
+# Explanation
+
+এখানে:
+
+- `T` = string
+- `U` = number
+
+---
+
+# Real Life Example
+
+```ts
+interface User {
+  name: string;
+  age: number;
+}
+
+function showUser<T>(user: T): T {
+  return user;
+}
+
+const user = showUser<User>({
+  name: "Raihan",
+  age: 22,
+});
+
+console.log(user);
+```
+
+---
+
+---
+
+# Using Any
+
+```ts
+function getData(data: any): any {
+  return data;
+}
+```
+
+এখানে type safety নেই।
+
+---
+
+# Using Generics
+
+```ts
+function getData<T>(data: T): T {
+  return data;
+}
+```
+
+এখানে type safe থাকে।
+
+---
+# TypeScript Generic Constraints & `keyof`
+
+Constraint হলো TypeScript Generics-এর একটি feature যেটা generic type-এর উপর rule বা restriction দেয়।
+
+সহজ ভাষায়:
+
+> কোন type allow হবে আর কোন type allow হবে না সেটা control করার জন্য Constraint ব্যবহার করা হয়।
+
+Constraint দিতে `extends` keyword ব্যবহার করা হয়।
+
+---
+
+# Basic Constraint Syntax
+
+```ts
+function example<T extends Type>(
+  value: T
+) {}
+```
+
+---
+
+# Basic Example
+
+```ts
+function printLength<T extends string>(
+  value: T
+): number {
+  return value.length;
+}
+
+console.log(printLength("TypeScript"));
+```
+
+---
+
+## Explanation
+
+এখানে শুধুমাত্র string allow করা হয়েছে।
+
+কারণ:
+
+```ts
+T extends string
+```
+
+---
+
+# Constraint with Object
+
+```ts
+interface User {
+  name: string;
+}
+
+function showUser<T extends User>(
+  user: T
+): void {
+  console.log(user.name);
+}
+
+showUser({
+  name: "Raihan",
+});
+```
+
+---
+
+## Explanation
+
+এখানে object-এর মধ্যে অবশ্যই `name` property থাকতে হবে।
+
+---
+
+# What is `keyof`?
+
+`keyof` হলো TypeScript-এর একটি keyword যেটা কোনো object type-এর সব key-এর union type তৈরি করে।
+
+সহজ ভাষায়:
+
+> Object-এর property name গুলো বের করার জন্য `keyof` ব্যবহার করা হয়।
+
+---
+
+# Basic Example of `keyof`
+
+```ts
+interface User {
+  name: string;
+  age: number;
+}
+```
+
+---
+
+```ts
+type UserKeys = keyof User;
+```
+
+---
+
+## Result
+
+```ts
+"name" | "age"
+```
+
+---
+
+## Explanation
+
+`keyof User` object-এর সব key return করেছে।
+
+---
+
+# `keyof` with Generic Constraint
+
+এটি সবচেয়ে important use case।
+
+---
+
+# Example
+
+```ts
+function getProperty<
+  T,
+  K extends keyof T
+>(obj: T, key: K) {
+  return obj[key];
+}
+```
+
+---
+
+## Explanation
+
+এখানে:
+
+- `T` = object type
+- `K` = object-এর key
+- `K extends keyof T`
+
+মানে:
+
+> key অবশ্যই object-এর valid property হতে হবে।
+
+---
+
+# Full Example
+
+```ts
+function getProperty<
+  T,
+  K extends keyof T
+>(obj: T, key: K) {
+  return obj[key];
+}
+
+const user = {
+  name: "Raihan",
+  age: 22,
+};
+
+console.log(
+  getProperty(user, "name")
+);
+```
+
+---
+
+## Output
+
+```ts
+Raihan
+```
+
+---
+
+# Invalid Example
+
+```ts
+getProperty(user, "email");
+```
+
+---
+
+## Problem
+
+এখানে error হবে।
+
+কারণ:
+
+```ts
+"email"
+```
+
+`user` object-এর valid key না।
+
+---
+
+# Why `keyof` is Useful
+
+`keyof` ব্যবহার করলে:
+
+- Invalid property access prevent হয়
+- Type safety বাড়ে
+- Better autocomplete পাওয়া যায়
+- Dynamic object access safe হয়
+
+---
+
+# Real Life Example
+
+```ts
+interface Product {
+  name: string;
+  price: number;
+}
+
+function getValue<
+  T,
+  K extends keyof T
+>(obj: T, key: K) {
+  return obj[key];
+}
+
+const product: Product = {
+  name: "Laptop",
+  price: 50000,
+};
+
+console.log(
+  getValue(product, "price")
+);
+```
+
+---
+
+# Constraint + `keyof`
+
+```ts
+K extends keyof T
+```
+
+এটি TypeScript-এর সবচেয়ে common generic patternগুলোর একটি।
+
+এটি নিশ্চিত করে:
+
+- key valid কিনা
+- object-এর মধ্যে property আছে কিনা
+
+---
+
+# TypeScript Enum
+
+
+Enum হলো TypeScript-এর একটি feature যেটা related constant values একসাথে group করে রাখার জন্য ব্যবহার করা হয়।
+
+সহজ ভাষায়:
+
+> একাধিক fixed value কে একটি নামের ভিতরে organize করার জন্য Enum ব্যবহার করা হয়।
+
+---
+
+# Why We Use Enum
+
+- Fixed values manage করতে
+- Readable code লিখতে
+- Magic value avoid করতে
+- Code clean করতে
+
+---
+
+# Basic Enum Syntax
+
+```ts
+enum EnumName {
+  VALUE1,
+  VALUE2,
+  VALUE3,
+}
+```
+
+---
+
+# Custom Numeric Enum
+
+আমরা চাইলে নিজেরাও number assign করতে পারি।
+
+---
+
+# Example
+
+```ts
+enum StatusCode {
+  Success = 200,
+  NotFound = 404,
+  ServerError = 500,
+}
+
+console.log(StatusCode.Success);
+```
+
+---
+
+## Output
+
+```ts
+200
+```
+
+---
+
+# String Enum
+
+Enum-এর value string-ও হতে পারে।
+
+---
+
+# Example
+
+```ts
+enum Role {
+  Admin = "ADMIN",
+  User = "USER",
+  Guest = "GUEST",
+}
+
+console.log(Role.Admin);
+```
+
+---
+
+## Output
+
+```ts
+ADMIN
+```
+
+
+# Using Enum in Function
+
+```ts
+enum Role {
+  Admin = "ADMIN",
+  User = "USER",
+}
+
+function checkRole(role: Role) {
+  console.log(role);
+}
+
+checkRole(Role.Admin);
+```
+
+---
+
+# TypeScript `as const`
+
+`as const` হলো TypeScript-এর একটি feature যেটা ব্যবহার করে value-কে fully readonly এবং exact literal type বানানো হয়।
+
+সহজ ভাষায়:
+
+> কোনো value যেন change না হয় এবং exact value type হিসেবে থাকে, তার জন্য `as const` ব্যবহার করা হয়।
+
+---
+
+# Why We Use `as const`
+
+সাধারণভাবে TypeScript value-কে broad type বানিয়ে ফেলে।
+
+যেমন:
+
+```ts
+let role = "ADMIN";
+```
+
+এখানে type হবে:
+
+```ts
+string
+```
+
+কিন্তু অনেক সময় আমরা exact value রাখতে চাই:
+
+```ts
+"ADMIN"
+```
+
+তখন `as const` ব্যবহার করা হয়।
+
+---
+
+# Basic Syntax
+
+```ts
+value as const
+```
+
+---
+
+# Basic Example
+
+```ts
+const role = "ADMIN" as const;
+```
+
+---
+
+## Explanation
+
+এখানে type হবে:
+
+```ts
+"ADMIN"
+```
+
+string না।
+
+---
+
+# Without `as const`
+
+```ts
+const status = "SUCCESS";
+```
+
+---
+
+## Type
+
+```ts
+string
+```
+
+---
+
+# With `as const`
+
+```ts
+const status = "SUCCESS" as const;
+```
+
+---
+
+## Type
+
+```ts
+"SUCCESS"
+```
+
+---
+
+# `as const` with Object
+
+```ts
+const user = {
+  name: "Raihan",
+  age: 22,
+} as const;
+```
+
+---
+
+## Explanation
+
+এখন:
+
+- সব property readonly হয়ে যাবে
+- exact value type হবে
+
+---
+
+## Result Type
+
+```ts
+{
+  readonly name: "Raihan";
+  readonly age: 22;
+}
+```
+
+---
+
+# Invalid Update Example
+
+```ts
+const user = {
+  name: "Raihan",
+} as const;
+
+user.name = "Hasan";
+```
+
+---
+
+## Problem
+
+এখানে error হবে।
+
+কারণ property readonly।
+
+---
+
+# `as const` with Array
+
+```ts
+const colors = [
+  "red",
+  "green",
+  "blue",
+] as const;
+```
+
+---
+
+## Result Type
+
+```ts
+readonly ["red", "green", "blue"]
+```
+
+---
+
+## Explanation
+
+এখন array:
+
+- readonly
+- exact literal values ধরে রাখবে
+
+---
+
+# Real Life Example
+
+```ts
+const Roles = {
+  ADMIN: "ADMIN",
+  USER: "USER",
+  GUEST: "GUEST",
+} as const;
+```
+
+---
+
+# Access Example
+
+```ts
+console.log(Roles.ADMIN);
+```
+
+---
+
+## Output
+
+```ts
+ADMIN
+```
+
+---
+
+# Why `as const` Better Than Enum Sometimes
+
+অনেক project-এ `as const` Enum-এর alternative হিসেবে ব্যবহার করা হয়।
+
+কারণ:
+
+- Extra JavaScript code generate করে না
+- Lightweight
+- Better performance
+- Modern TypeScript pattern
+
+---
+
+# Enum Example
+
+```ts
+enum Role {
+  Admin = "ADMIN",
+}
+```
+
+---
+
+# `as const` Alternative
+
+```ts
+const Role = {
+  Admin: "ADMIN",
+} as const;
+```
+
+---
+
+# Extract Type from `as const`
+
+```ts
+const Roles = {
+  ADMIN: "ADMIN",
+  USER: "USER",
+} as const;
+
+type Role =
+  (typeof Roles)[keyof typeof Roles];
+```
+
+---
+
+## Result
+
+```ts
+"ADMIN" | "USER"
+```
+
+---
+
+# Explanation
+
+এখানে object values থেকে union type তৈরি হয়েছে।
+
+---
+# TypeScript Conditional Type
+
+Conditional Type হলো TypeScript-এর একটি feature যেটা condition অনুযায়ী different type return করে।
+
+সহজ ভাষায়:
+
+> Type-এর উপর condition চালিয়ে নতুন type তৈরি করার জন্য Conditional Type ব্যবহার করা হয়।
+
+---
+
+# Syntax
+
+```ts
+T extends U ? X : Y
+```
+
+---
+
+## Explanation
+
+মানে:
+
+```ts
+যদি T, U কে follow করে
+তাহলে X
+না হলে Y
+```
+
+---
+
+# Basic Example
+
+```ts
+type CheckString<T> =
+  T extends string ? string : number;
+```
+
+---
+
+# Example Usage
+
+```ts
+type A = CheckString<string>;
+type B = CheckString<boolean>;
+```
+
+---
+
+## Result
+
+```ts
+A = string
+B = number
+```
+
+---
+
+# Real Example
+
+```ts
+type IsNumber<T> =
+  T extends number ? "Yes" : "No";
+
+type Result1 = IsNumber<number>;
+type Result2 = IsNumber<string>;
+```
+
+---
+
+## Result
+
+```ts
+"Yes"
+"No"
+```
+
+---
+
+# Why Conditional Type Useful?
+
+- Dynamic type তৈরি করা যায়
+- Reusable type লেখা যায়
+- Advanced type logic তৈরি করা যায়
+
+---
+
+---
+
+# TypeScript Mapped Type
+
+
+Mapped Type ব্যবহার করে existing type-এর সব property modify করে নতুন type তৈরি করা হয়।
+
+সহজ ভাষায়:
+
+> এক type-এর property গুলো loop করে নতুন type তৈরি করার জন্য Mapped Type ব্যবহার করা হয়।
+
+---
+
+# Basic Syntax
+
+```ts
+type NewType = {
+  [Key in keyof OldType]: Type;
+};
+```
+
+---
+
+# Basic Example
+
+```ts
+type User = {
+  name: string;
+  age: number;
+};
+```
+
+---
+
+```ts
+type ReadOnlyUser = {
+  readonly [K in keyof User]: User[K];
+};
+```
+
+---
+
+## Result
+
+```ts
+{
+  readonly name: string;
+  readonly age: number;
+}
+```
+
+---
+
+# Explanation
+
+এখানে:
+
+- `keyof User` সব key নিয়েছে
+- loop করে readonly করেছে
+
+---
+
+# Another Example
+
+```ts
+type BooleanUser = {
+  [K in keyof User]: boolean;
+};
+```
+
+---
+
+## Result
+
+```ts
+{
+  name: boolean;
+  age: boolean;
+}
+```
+
+---
+
+# Why Mapped Type Useful?
+
+- Reusable type তৈরি করা যায়
+- Duplicate code কমে
+- Dynamic type manipulation করা যায়
+
+---
+
+---
+
+# TypeScript Utility Types
+
+## What are Utility Types?
+
+Utility Types হলো TypeScript-এর built-in helper types যেগুলো existing type modify করতে সাহায্য করে।
+
+---
+
+# Common Utility Types
+
+- `Partial`
+- `Required`
+- `Readonly`
+- `Pick`
+- `Omit`
+- `Record`
+
+---
+
+# 1. Partial
+
+সব property optional করে দেয়।
+
+---
+
+# Example
+
+```ts
+type User = {
+  name: string;
+  age: number;
+};
+```
+
+---
+
+```ts
+type PartialUser = Partial<User>;
+```
+
+---
+
+## Result
+
+```ts
+{
+  name?: string;
+  age?: number;
+}
+```
+
+---
+
+# 2. Required
+
+সব property required করে দেয়।
+
+---
+
+# Example
+
+```ts
+type User = {
+  name?: string;
+  age?: number;
+};
+
+type RequiredUser = Required<User>;
+```
+
+---
+
+## Result
+
+```ts
+{
+  name: string;
+  age: number;
+}
+```
+
+---
+
+# 3. Readonly
+
+সব property readonly করে দেয়।
+
+---
+
+# Example
+
+```ts
+type User = {
+  name: string;
+};
+
+type ReadonlyUser = Readonly<User>;
+```
+
+---
+
+# Result
+
+```ts
+{
+  readonly name: string;
+}
+```
+
+---
+
+# 4. Pick
+
+Specific property select করে।
+
+---
+
+# Example
+
+```ts
+type User = {
+  name: string;
+  age: number;
+  email: string;
+};
+
+type UserInfo = Pick<
+  User,
+  "name" | "email"
+>;
+```
+
+---
+
+## Result
+
+```ts
+{
+  name: string;
+  email: string;
+}
+```
+
+---
+
+# 5. Omit
+
+Specific property remove করে।
+
+---
+
+# Example
+
+```ts
+type User = {
+  name: string;
+  age: number;
+  password: string;
+};
+
+type SafeUser = Omit<
+  User,
+  "password"
+>;
+```
+
+---
+
+## Result
+
+```ts
+{
+  name: string;
+  age: number;
+}
+```
+
+---
+
+# 6. Record
+
+Specific key এবং value type দিয়ে object তৈরি করে।
+
+---
+
+# Example
+
+```ts
+type Roles = Record<
+  string,
+  string
+>;
+```
+
+---
+
+## Result
+
+```ts
+{
+  [key: string]: string;
+}
+```
+
+---
+
+# Why Utility Types Useful?
+
+- Code reusable হয়
+- Duplicate code কমে
+- Type manipulation সহজ হয়
+- Cleaner code পাওয়া যায়
+
+---
+
+# Best Practices
+
+## ✅ Built-in Utility Types ব্যবহার করুন
+
+নিজে manually type না লিখে utility type ব্যবহার করুন।
+
+---
+
+## ✅ Mapped Type ব্যবহার করুন dynamic type তৈরির জন্য
+
+---
+
+## ✅ Conditional Type ব্যবহার করুন advanced logic-এর জন্য
+
+---
+
+# Quick Recap
+
+| Topic | Purpose |
+|---|---|
+| Conditional Type | Condition অনুযায়ী type return |
+| Mapped Type | Existing type modify |
+| Utility Type | Built-in helper type |
+
+---
+
+# Final Example
+
+```ts
+type User = {
+  name: string;
+  age: number;
+  password: string;
+};
+
+type PublicUser = Omit<
+  User,
+  "password"
+>;
+
+type OptionalUser =
+  Partial<User>;
+```
+
+---
+
+# Conclusion
+
+Conditional Type, Mapped Type এবং Utility Types হলো TypeScript-এর advanced এবং powerful feature।
+
+এগুলো ব্যবহার করে:
+
+- reusable
+- dynamic
+- clean
+- type safe
+
+code লেখা যায়।
+
+বিশেষ করে large TypeScript project-এ এগুলো অনেক important।
 
 
 
