@@ -2422,20 +2422,305 @@ type OptionalUser =
 
 ---
 
-# Conclusion
+# TypeScript Class and Object
 
-Conditional Type, Mapped Type এবং Utility Types হলো TypeScript-এর advanced এবং powerful feature।
+Class হলো object তৈরির blueprint বা template।
 
-এগুলো ব্যবহার করে:
+সহজ ভাষায়:
 
-- reusable
-- dynamic
-- clean
-- type safe
+> একই ধরনের multiple object তৈরি করার structure define করার জন্য Class ব্যবহার করা হয়।
 
-code লেখা যায়।
+---
 
-বিশেষ করে large TypeScript project-এ এগুলো অনেক important।
+# Basic Class Syntax
+
+```ts
+class Person {
+  name: string;
+  age: number;
+
+  constructor(name: string, age: number) {
+    this.name = name;
+    this.age = age;
+  }
+
+  introduce() {
+    console.log(
+      `My name is ${this.name}`
+    );
+  }
+}
+```
+
+---
+
+# Create Object from Class
+
+```ts
+const user1 = new Person(
+  "Raihan",
+  22
+);
+
+user1.introduce();
+```
+
+---
+
+## Explanation
+
+এখানে:
+
+- `Person` হলো class
+- `user1` হলো object
+- `new` keyword দিয়ে object তৈরি করা হয়েছে
+
+---
+
+# Constructor in Class
+
+Constructor হলো special method যেটা object তৈরি হওয়ার সময় automatically run হয়।
+
+---
+
+# Example
+
+```ts
+class Car {
+  brand: string;
+
+  constructor(brand: string) {
+    this.brand = brand;
+  }
+}
+
+const car1 = new Car("BMW");
+```
+
+---
+
+# Access Modifier
+
+TypeScript-এ:
+
+- `public`
+- `private`
+- `protected`
+
+ব্যবহার করা যায়।
+
+---
+
+# Public
+
+সব জায়গা থেকে access করা যায়।
+
+```ts
+class User {
+  public name: string;
+
+  constructor(name: string) {
+    this.name = name;
+  }
+}
+```
+
+---
+
+# Private
+
+শুধু class-এর ভিতরে access করা যায়।
+
+```ts
+class User {
+  private password: string;
+
+  constructor(password: string) {
+    this.password = password;
+  }
+}
+```
+
+---
+
+# Protected
+
+Class এবং child class access করতে পারে।
+
+```ts
+class User {
+  protected email: string;
+
+  constructor(email: string) {
+    this.email = email;
+  }
+}
+```
+
+---
+
+# TypeScript Inheritance
+
+Inheritance ব্যবহার করে একটি class আরেকটি class-এর property এবং method নিতে পারে।
+
+# Syntax
+
+```ts
+class Child extends Parent
+```
+
+---
+
+# Example
+
+```ts
+class Person {
+  name: string;
+
+  constructor(name: string) {
+    this.name = name;
+  }
+
+  introduce() {
+    console.log(
+      `I am ${this.name}`
+    );
+  }
+}
+```
+
+---
+
+```ts
+class Student extends Person {
+  roll: number;
+
+  constructor(
+    name: string,
+    roll: number
+  ) {
+    super(name);
+
+    this.roll = roll;
+  }
+}
+```
+
+---
+
+# Create Object
+
+```ts
+const student1 = new Student(
+  "Raihan",
+  101
+);
+
+student1.introduce();
+```
+
+---
+
+## Explanation
+
+এখানে:
+
+- `Student` class `Person` inherit করেছে
+- তাই `introduce()` method use করতে পারছে
+
+---
+
+# `super()` Keyword
+
+Parent class-এর constructor call করার জন্য `super()` ব্যবহার করা হয়।
+
+---
+
+# Type Guard in TypeScript
+
+Type Guard ব্যবহার করে runtime-এ type check করা হয়।
+
+সহজ ভাষায়:
+
+> কোনো variable-এর actual type check করার জন্য Type Guard ব্যবহার করা হয়।
+
+# Type Guard using `typeof`
+
+Primitive type check করার জন্য `typeof` ব্যবহার করা হয়।
+
+---
+
+# Example
+
+```ts
+function printValue(
+  value: string | number
+) {
+  if (typeof value === "string") {
+    console.log(
+      value.toUpperCase()
+    );
+  } else {
+    console.log(value.toFixed(2));
+  }
+}
+```
+
+---
+
+## Explanation
+
+এখানে:
+
+- string হলে `toUpperCase()`
+- number হলে `toFixed()`
+
+ব্যবহার করা হয়েছে।
+
+---
+
+# Type Guard using `in`
+
+Object property check করার জন্য `in` ব্যবহার করা হয়।
+
+---
+
+# Example
+
+```ts
+type User = {
+  name: string;
+};
+
+type Admin = {
+  name: string;
+  role: string;
+};
+
+function checkUser(
+  person: User | Admin
+) {
+  if ("role" in person) {
+    console.log(person.role);
+  } else {
+    console.log(person.name);
+  }
+}
+```
+
+---
+
+## Explanation
+
+এখানে:
+
+```ts
+"role" in person
+```
+
+check করছে object-এর মধ্যে `role` property আছে কিনা।
+
+---
 
 
 
